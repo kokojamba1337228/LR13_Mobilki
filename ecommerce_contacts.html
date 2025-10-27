@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты - TechStore</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .page-hero {
+            text-align: center;
+            padding: 60px 0 40px;
+            color: white;
+        }
+
+        .page-hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .page-hero p {
+            font-size: 20px;
+            opacity: 0.9;
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+
+        .contacts-section {
+            padding: 60px 0;
+        }
+
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .contact-form-container {
+            background: white;
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeInLeft 1s ease;
+        }
+
+        .contact-form-container h2 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 16px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .contact-info-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            animation: fadeInRight 1s ease;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+        }
+
+        .info-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .info-card h3 {
+            color: #333;
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .info-card p {
+            color: #666;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .info-card a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .info-card a:hover {
+            text-decoration: underline;
+        }
+
+        .map-section {
+            background: white;
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .map-section h2 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-placeholder::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.3) 0%, transparent 60%);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .social-btn {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            transition: all 0.3s;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 60px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 968px) {
+            .contacts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-hero h1 {
+                font-size: 36px;
+            }
+
+            .contact-form-container,
+            .map-section {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">⚡ TechStore</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Главная</a></li>
+                    <li><a href="#projects">Проекты</a></li>
+                    <li><a href="#contacts">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-hero">
+        <div class="container">
+            <h1>Свяжитесь с нами</h1>
+            <p>Мы всегда рады помочь вам с выбором техники</p>
+        </div>
+    </section>
+
+    <section class="contacts-section">
+        <div class="container">
+            <div class="contacts-grid">
+                <div class="contact-form-container">
+                    <h2>Напишите нам</h2>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Ваше имя</label>
+                            <input type="text" id="name" name="name" placeholder="Иван Иванов" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="example@mail.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Телефон</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+7 (999) 123-45-67">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Ваше сообщение</label>
+                            <textarea id="message" name="message" placeholder="Расскажите, чем мы можем помочь..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Отправить сообщение</button>
+                    </form>
+                </div>
+
+                <div class="contact-info-container">
+                    <div class="info-card">
+                        <div class="info-icon">📍</div>
+                        <h3>Адрес</h3>
+                        <p>г. Москва, ул. Тверская, д. 15<br>
+                        ТЦ "Технопарк", 3 этаж</p>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-icon">📞</div>
+                        <h3>Телефон</h3>
+                        <p><a href="tel:+74951234567">+7 (495) 123-45-67</a><br>
+                        <a href="tel:+79991234567">+7 (999) 123-45-67</a></p>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-icon">✉️</div>
+                        <h3>Email</h3>
+                        <p><a href="mailto:info@techstore.ru">info@techstore.ru</a><br>
+                        <a href="mailto:support@techstore.ru">support@techstore.ru</a></p>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-icon">⏰</div>
+                        <h3>Режим работы</h3>
+                        <p>Пн-Пт: 10:00 - 21:00<br>
+                        Сб-Вс: 11:00 - 20:00</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="map-section">
+                <h2>Мы на карте</h2>
+                <div class="map-placeholder">
+                    🗺️
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-btn" title="ВКонтакте">
+                        <span style="color: #4680C2;">VK</span>
+                    </a>
+                    <a href="#" class="social-btn" title="Telegram">
+                        <span style="color: #0088cc;">✈️</span>
+                    </a>
+                    <a href="#" class="social-btn" title="WhatsApp">
+                        <span style="color: #25D366;">📱</span>
+                    </a>
+                    <a href="#" class="social-btn" title="Instagram">
+                        <span style="color: #E4405F;">📷</span>
+                    </a>
+                </div>
+            

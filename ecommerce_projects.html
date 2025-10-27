@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Наши проекты - TechStore</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .page-hero {
+            text-align: center;
+            padding: 60px 0 40px;
+            color: white;
+        }
+
+        .page-hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        }
+
+        .page-hero p {
+            font-size: 20px;
+            opacity: 0.9;
+        }
+
+        /* СЛАЙДЕР */
+        .slider-section {
+            padding: 40px 0 60px;
+        }
+
+        .slider-container {
+            position: relative;
+            max-width: 1100px;
+            margin: 0 auto;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.4);
+        }
+
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 450px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+            padding: 60px;
+            text-align: center;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(255,255,255,0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .slide-icon {
+            font-size: 120px;
+            margin-bottom: 30px;
+            animation: floatIcon 3s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        .slide-content {
+            z-index: 2;
+        }
+
+        .slide-content h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+        }
+
+        .slide-content p {
+            font-size: 20px;
+            opacity: 0.95;
+            max-width: 700px;
+            line-height: 1.6;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.25);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.4);
+            color: white;
+            font-size: 36px;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .slider-btn:hover {
+            background: rgba(255,255,255,0.4);
+            transform: translateY(-50%) scale(1.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .slider-btn.prev {
+            left: 30px;
+        }
+
+        .slider-btn.next {
+            right: 30px;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.4);
+            border: 2px solid rgba(255,255,255,0.6);
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+
+        .dot.active {
+            background: white;
+            width: 40px;
+            border-radius: 7px;
+            box-shadow: 0 4px 15px rgba(255,255,255,0.5);
+        }
+
+        @keyframes floatIcon {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* ПРОЕКТЫ */
+        .projects-section {
+            padding: 60px 0;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: white;
+            color: #667eea;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            transition: all 0.4s;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .project-card:nth-child(1) { animation-delay: 0.1s; }
+        .project-card:nth-child(2) { animation-delay: 0.2s; }
+        .project-card:nth-child(3) { animation-delay: 0.3s; }
+        .project-card:nth-child(4) { animation-delay: 0.4s; }
+        .project-card:nth-child(5) { animation-delay: 0.5s; }
+        .project-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .project-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+        }
+
+        .project-banner {
+            width: 100%;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-content {
+            padding: 30px;
+        }
+
+        .project-tag {
+            display: inline-block;
+            padding: 6px 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .project-title {
+            font-size: 26px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .project-description {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .project-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .project-link {
+            display: block;
+            text-align: center;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .project-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 60px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-hero h1 {
+                font-size: 36px;
+            }
+
+            .slide {
+                height: 400px;
+                padding: 40px 20px;
+            }
+
+            .slide-icon {
+                font-size: 80px;
+            }
+
+            .slide-content h2 {
+                font-size: 32px;
+            }
+
+            .slide-content p {
+                font-size: 16px;
+            }
+
+            .slider-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+
+            .slider-btn.prev {
+                left: 15px;
+            }
+
+            .slider-btn.next {
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">⚡ TechStore</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Главная</a></li>
+                    <li><a href="#projects">Проекты</a></li>
+                    <li><a href="#contacts">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-hero">
+        <div class="container">
+            <h1>Наши проекты</h1>
+            <p>Инновации и технологии для лучшего будущего</p>
+        </div>
+    </section>
+
+    <!-- СЛАЙДЕР -->
+    <section class="slider-section">
+        <div class="container">
+            <div class="slider-container">
+                <div class="slider-wrapper" id="sliderWrapper">
+                    <div class="slide" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <div class="slide-icon">🚀</div>
+                        <div class="slide-content">
+                            <h2>Инновационные решения</h2>
+                            <p>Создаём технологии будущего уже сегодня. Более 50 успешных проектов в области e-commerce и IoT</p>
+                        </div>
+                    </div>
+                    <div class="slide" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <div class="slide-icon">💡</div>
+                        <div class="slide-content">
+                            <h2>Умные технологии</h2>
+                            <p>Искусственный интеллект и машинное обучение в каждом нашем проекте для лучшего пользовательского опыта</p>
+                        </div>
+                    </div>
+                    <div class="slide" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                        <div class="slide-icon">🌍</div>
+                        <div class="slide-content">
+                            <h2>Глобальное присутствие</h2>
+                            <p>Наши проекты используются в 30+ странах мира. Миллионы довольных пользователей ежедневно</p>
+                        </div>
+                    </div>
+                    <div class="slide" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="slide-icon">🏆</div>
+                        <div class="slide-content">
+                            <h2>Лидеры индустрии</h2>
+                            <p>15+ международных наград за инновации в области технологий и электронной коммерции</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="slider-btn prev" onclick="moveSlide(-1)">‹</button>
+                <button class="slider-btn next" onclick="moveSlide(1)">›</button>
+                <div class="slider-dots" id="sliderDots"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="projects-section">
+        <div class="container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Все проекты</button>
+                <button class="filter-btn" data-filter="mobile">Мобильные</button>
+                <button class="filter-btn" data-filter="web">Web</button>
+                <button class="filter-btn" data-filter="iot">IoT</button>
+            </div>
+
+            <div class="projects-grid" id="projectsGrid">
+                <div class="project-card" data-category="mobile">
+                    <div class="project-banner" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">📱</div>
+                    <div class="project-content">
+                        <span class="project-tag">Mobile App</span>
+                        <h3 class="project-title">TechStore Mobile</h3>
+                        <p class="project-description">Мобильное приложение для покупок с расширенной AR-примеркой гаджетов и персонализированными рекомендациями на основе AI.</p>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <div class="stat-number">150K+</div>
+                                <div class="stat-label">Загрузок</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">4.8</div>
+                                <div class="stat-label">Рейтинг</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">2024</div>
+                                <div class="stat-label">Год</div>
+                            </div>
+                        </div>
+                        <a href="#" class="project-link">Подробнее →</a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="web">
+                    <div class="project-banner" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">🌐</div>
+                    <div class="project-content">
+                        <span class="project-tag">Web Platform</span>
+                        <h3 class="project-title">Smart Marketplace</h3>
+                        <p class="project-description">Интеллектуальная торговая платформа с системой сравнения цен, умным поиском и интеграцией с партнёрскими магазинами.</p>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <div class="stat-number">500K+</div>
+                                <div class="stat-label">Пользователей</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">95%</div>
+                                <div class="stat-label">Uptime</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">2023</div>
+                                <div class="stat-label">Год</div>
+                            </div>
+                        </div>
+                        <a href="#" class="project-link">Подробнее →</a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="iot">
+                    <div class="project-banner" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">🏠</div>
+                    <div class="project-content">
+                        <span class="project-tag">IoT Solution</span>
+                        <h3 class="project-title">Smart Home Hub</h3>
+                        <p class="project-description">Центр управления умным домом, объединяющий все ваши устройства в единую экосистему с голосовым управлением.</p>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <div class="stat-number">50K+</div>
+                                <div class="stat-label">Устройств</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">30+</div>
+                                <div class="stat-label">Партнёров</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">2024</div>
+                                <div class="stat-label">Год</div>
+                            </div>
+                        </div>
+                        <a href="#" class="project-link">Подробнее →</a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="mobile">
+                    <div class="project-banner" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">⌚</div>
+                    <div class="project-content">
+                        <span class="project-tag">Wearable Tech</span>
+                        <h3 class="project-title">FitWatch OS</h3>
+                        <p class="project-description">Операционная система для умных часов с расширенными функциями здоровья, фитнеса и бесконтактных платежей.</p>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <div class="stat-number">200K+</div>
+                                <div class="stat-label">Устройств</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">4.9</div>
+                                <div class="stat-label">Рейтинг</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">2025</div>
+                                <div class="stat-label">Год</div>
+                            </div>
+                        </div>
+                        <a href="#" class="project-link">Подробнее →</a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="web">
+                    <div class="project-banner" style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);">💳</div>
+                    <div class="project-content">
+                        <span class="project-tag">Payment System</span>
+                        <h3 class="project-title">TechPay</h3>
+                        <p class="project-description">Безопасная платёжная система с поддержкой криптовалют, мгновенными переводами и программой лояльности.</p>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <div class="stat-number">1M+</div>
+                                <div class="stat-label">Транзакций</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">99.9%</div>
+                                <div class="stat-label">Надёжность</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">2024</div>
+                                <div class="stat-label">Год</div>
+                            </div>
+                        </div>
+                        <a href="#" class="project-link">Подробнее →</a>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="iot">
+                    <div class="project-banner" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">🤖</div>
+                    <div class="project-content">
+                        <span class="project-tag">AI Assistant</span>
+                        <h3 class="project-title">TechBot AI</h3>
+                        <p class="project-description">Умный помощник для подбора техники на основе ваших предпочтений, бюджета и потребностей с использованием машинного обучения.</p>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <div class="stat-number">300K+</div>
+                                <div class="stat-label">Консультаций</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">4.7</div>
+                                <div class="stat-label">Рейтинг</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">2025</div>
+                                <div class="stat-label">Год</div>
+                            </div>
+                        </div>
+                        <a href="#" class="project-link">Подробнее →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 TechStore. Все права защищены.</p>
+            <p>Инновации, которые меняют мир технологий</p>
+        </div>
+    </footer>
+
+    <script>
+        // === СЛАЙДЕР ===
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const sliderWrapper = document.getElementById('sliderWrapper');
+        const dotsContainer = document.getElementById('sliderDots');
+
+        // Создаём точки для навигации
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            if (index === 0) dot.classList.add('active');
+            dot.onclick = () => goToSlide(index);
+            dotsContainer.appendChild(dot);
+        });
+
+        function updateSlider() {
+            sliderWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function moveSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = slides.length - 1;
+            if (currentSlide >= slides.length) currentSlide = 0;
+            updateSlider();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlider();
+        }
+
+        // Автоматическая прокрутка каждые 5 секунд
+        let autoSlide = setInterval(() => moveSlide(1), 5000);
+
+        // Остановка при наведении
+        document.querySelector('.slider-container').addEventListener('mouseenter', () => {
+            clearInterval(autoSlide);
+        });
+
+        document.querySelector('.slider-container').addEventListener('mouseleave', () => {
+            autoSlide = setInterval(() => moveSlide(1), 5000);
+        });
+
+        // === ФИЛЬТРАЦИЯ ПРОЕКТОВ ===
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+
+                const filter = this.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                        card.style.animation = 'none';
+                        setTimeout(() => {
+                            card.style.animation = 'fadeInUp 0.6s ease forwards';
+                        }, 10);
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        document.querySelectorAll('.project-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const projectTitle = this.closest('.project-content').querySelector('.project-title').textContent;
+                alert(`Открываем подробную информацию о проекте "${projectTitle}"`);
+            });
+        });
+    </script>
+</body>
+</html>
