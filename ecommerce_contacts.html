@@ -44,6 +44,7 @@
             font-weight: bold;
             color: white;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            cursor: pointer;
         }
 
         .nav-links {
@@ -61,7 +62,8 @@
             border-radius: 20px;
         }
 
-        .nav-links a:hover {
+        .nav-links a:hover,
+        .nav-links a.active {
             background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
         }
@@ -340,11 +342,11 @@
     <header>
         <div class="container">
             <nav>
-                <div class="logo">⚡ TechStore</div>
+                <div class="logo" onclick="window.location.href='#home'">⚡ TechStore</div>
                 <ul class="nav-links">
                     <li><a href="#home">Главная</a></li>
-                    <li><a href="#projects">Проекты</a></li>
-                    <li><a href="#contacts">Контакты</a></li>
+                    <li><a href="ecommerce_projects.html">Проекты</a></li>
+                    <li><a href="ecommerce_contacts.html" class="active">Контакты</a></li>
                 </ul>
             </nav>
         </div>
@@ -433,4 +435,23 @@
                         <span style="color: #E4405F;">📷</span>
                     </a>
                 </div>
-            
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 TechStore. Все права защищены.</p>
+            <p>Инновации, которые меняют мир технологий</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
